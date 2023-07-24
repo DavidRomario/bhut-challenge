@@ -12,7 +12,7 @@
 
 ## Rotas
 - Método: GET
-- URL de exemplo: http://localhost:3000/cars
+- URL de exemplo: http://localhost:3000/cars/listCar
 - Response de exemplo:
  ````
 {
