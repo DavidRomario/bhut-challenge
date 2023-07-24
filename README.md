@@ -3,6 +3,8 @@
 ## Inicializar o projeto
 - Requisitos: docker-compose
 
+- Renomeie o ``.env.example`` para ``.env``
+
 - Para inicializar, rode o comando abaixo em seu terminal
   ````
   docker-compose up -d
