@@ -1,7 +1,7 @@
 const logSchema = require("../models/logModel");
 const axios = require("axios");
 const API_TESTE = process.env.API_TESTE;
-const rabbitmq = require("../libs/rabbitmq");
+const rabbitmq = require("../libs/publisher");
 
 async function getListCars(req, res) {
   try {

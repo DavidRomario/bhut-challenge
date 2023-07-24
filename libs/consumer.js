@@ -1,36 +1,27 @@
-const amqp = require("amqplib");
-const API_QUEUE = process.env.API_QUEUE;
+const rabbitmq = require("./rabbitmq");
 
 async function consumeAndSendWebhook() {
   try {
-    const connection = await amqp.connect(API_QUEUE);
-    const channel = await connection.createChannel();
-    const queueName = "cars";
+    const queue = await rabbitmq.connect("cars");
+    console.log("Waiting cars on the queue");
 
-    await channel.assertQueue(queueName, { durable: true });
-
-    console.log("Aguardando mensagens da fila...");
-
-    channel.consume(queueName, async (message) => {
+    queue.channel.consume("cars", async (message) => {
       const carInfo = JSON.parse(message.content.toString());
 
       await processCarInfo(carInfo);
 
-      channel.ack(message);
+      queue.channel.ack(message);
     });
   } catch (error) {
-    console.log("Erro ao consumir a fila e enviar o webhook:", error);
+    console.log("Error on send to webhook", error);
   }
 }
 
 async function processCarInfo(carInfo) {
   try {
-    console.log("Webhook enviado com sucesso:", carInfo);
+    console.log("Webhook successfully sent!", carInfo);
   } catch (error) {
-    console.log(
-      "Erro ao processar a informação do carro e enviar o webhook:",
-      error
-    );
+    console.log("Error on process info and send to webhook", error);
   }
 }
 
